@@ -9,10 +9,7 @@ Since the data is 3 dimensional, it was ideal to use a 3D U-Net. However, due to
 ### Approach 2 - 48 channels for 50 images
 The next approach was to use 2D U-Net itself but instead of using 1 channel ( grey-scale images ), I use 48 input channels, one for each layer in the z-axis to capture some relation between the 48 layers of . This gave substantially better results than the 3D U-Net but still ample scope for improvement.
 
-### Approach 3 - 48 * 50 single channel images
-Since we are not capturing the relational information between layers, we could sample randomly from the 48 layers in image giving us 2400 test slices. Then we use the same 2D U-Net to predict the outputs. There is some improvement but we could try a novel idea, I experimented with after discussing with colleagues.
-
-### Approach 4 - 48 * 50 double output images
+### Approach 3,3.1 - 48 * 50 double output images
 Right now, we're dealing with this as a regression problem and enforcing cutoffs. What we could do is make it a classification problem. We could output 2 channels instead of 1 and both with interchanged labels. Either we light up a pixel or we don't. In one channel we light up all background pixels and in the other we light up all foreground pixels by inverting their masks.
 The final image could be chosen in many different ways:
 1. By comparing the magnitude of the pixel value in each mask, choosing the higher value state. This gives us good results with both BCELoss and Cross Entropy Loss.
@@ -22,6 +19,9 @@ The final image could be chosen in many different ways:
 <p align="center">
 <img src="https://github.com/Anika-Roy/Hippocampus-Segmentation/assets/102136135/cfcc373f-34d4-45e7-95b5-e1eeb5b343c3" height=300 width=450>
 </p>
+
+### Approach 4 - 48 * 50 single channel images ( not in the repository at the moment )
+Since we are not capturing the relational information between layers, we could sample randomly from the 48 layers in image giving us 2400 test slices. Then we use the same 2D U-Net to predict the outputs. There is some improvement but we could try a novel idea, I experimented with after discussing with colleagues.
 
 
 These are all the approaches I've implemented so far, However, there are a few more strategies I would explore in the future
