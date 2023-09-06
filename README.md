@@ -15,6 +15,10 @@ Since we are not capturing the relational information between layers, we could s
 ### Approach 4 - 48 * 50 double output images
 Right now, we're dealing with this as a regression problem and enforcing cutoffs. What we could do is make it a classification problem. We could output 2 channels instead of 1 and both with interchanged labels. Either we light up a pixel or we don't. In one channel we light up all background pixels and in the other we light up all foreground pixels by inverting their masks.
 The final image is then chosen by comparing the magnitude of the pixel value in each mask, choosing the higher value state. This gives us good results with both BCELoss and Cross Entropy Loss.
+<p align="center">
+<img src="https://github.com/Anika-Roy/Hippocampus-Segmentation/assets/102136135/cfcc373f-34d4-45e7-95b5-e1eeb5b343c3" height=300 width=450>
+</p>
+
 
 These are all the approaches I've implemented so far, However, there are a few more strategies I would explore in the future
 
@@ -26,7 +30,9 @@ I observed that the model often gave false positive results. What many researche
 
 ## Experiment
 ### Understanding the Dataset and MRI scans
+<p align="center">
 ![image](https://github.com/Anika-Roy/Hippocampus-Segmentation/assets/102136135/24cfe8a0-931f-4c21-aad7-b146adc4fe21)
+</p>
 
 **About the datasets:**
 
@@ -45,7 +51,7 @@ Given the file format provided, it appears that we have two types of files for e
 
 The filenames indicate that they correspond to the left hemisphere of the hippocampus ("L"). Since have similar files for the right hemisphere (e.g., "s01_R_gt.nii.gz" and "s01_R.nii.gz"), we will follow a similar process for those as well.
 ### Model Architechture: U-Net
-<center><img title="U-Net architechture Diagram" alt="U-Net architechture Diagram" src="https://miro.medium.com/v2/resize:fit:1400/1*f7YOaE4TWubwaFF7Z1fzNw.png" height=500 width=800></center>
+<p align="center"><img title="U-Net architechture Diagram" alt="U-Net architechture Diagram" src="https://miro.medium.com/v2/resize:fit:1400/1*f7YOaE4TWubwaFF7Z1fzNw.png" height=500 width=800></p>
 
 UNet, evolved from the traditional convolutional neural network, was first designed and applied in 2015 to process biomedical images. 
 
@@ -66,7 +72,7 @@ The U-Net architecture is characterized by its U-shaped structure, which consist
 Dice Coefficient is similar to IoU Coefficient, both being positively correlated. I used this metric since it is very intuitive in image segmentation tasks. It is a region-based loss (as shown in the table below).  It can very well handle the class imbalance
 in terms of pixel count for foreground and background
 
-<center>
+<p align="center">
   
 | Type                           | Loss Function                    |
 |--------------------------------|----------------------------------|
@@ -79,11 +85,11 @@ in terms of pixel count for foreground and background
 |                                | Tversky Loss                     |
 |                                | Focal Tversky Loss               |
 
-</center>
+</p>
 The Dice coefficient ranges from 0 to 1, with 0 indicating no overlap between the sets and 1 indicating perfect overlap or similarity.
 
 The smooth parameter is added to avoid division by zero errors when both intersection and union are zero. It's a small positive value that prevents instability in the loss calculation
-<center><img src="https://cdn-images-1.medium.com/max/1600/0*HuENmnLgplFLg7Xv" height=300 width=550></center>
+<p align="center"><img src="https://cdn-images-1.medium.com/max/1600/0*HuENmnLgplFLg7Xv" height=300 width=550></p>
 
 2. <i>Cross-Entropy Loss</i>
 
