@@ -14,7 +14,11 @@ Since we are not capturing the relational information between layers, we could s
 
 ### Approach 4 - 48 * 50 double output images
 Right now, we're dealing with this as a regression problem and enforcing cutoffs. What we could do is make it a classification problem. We could output 2 channels instead of 1 and both with interchanged labels. Either we light up a pixel or we don't. In one channel we light up all background pixels and in the other we light up all foreground pixels by inverting their masks.
-The final image is then chosen by comparing the magnitude of the pixel value in each mask, choosing the higher value state. This gives us good results with both BCELoss and Cross Entropy Loss.
+The final image could be chosen in many different ways:
+1. By comparing the magnitude of the pixel value in each mask, choosing the higher value state. This gives us good results with both BCELoss and Cross Entropy Loss.
+2. We could keep a parameter for weighted sums and a threshold based off that
+3. We could keep modifying that parameter while training, maybe via hyperparameter tuning
+   
 <p align="center">
 <img src="https://github.com/Anika-Roy/Hippocampus-Segmentation/assets/102136135/cfcc373f-34d4-45e7-95b5-e1eeb5b343c3" height=300 width=450>
 </p>
