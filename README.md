@@ -30,9 +30,9 @@ I observed that the model often gave false positive results. What many researche
 
 ## Experiment
 ### Understanding the Dataset and MRI scans
-<p align="center">
+
 ![image](https://github.com/Anika-Roy/Hippocampus-Segmentation/assets/102136135/24cfe8a0-931f-4c21-aad7-b146adc4fe21)
-</p>
+
 
 **About the datasets:**
 
@@ -64,7 +64,10 @@ The U-Net architecture is characterized by its U-shaped structure, which consist
 3. Expansive Path (Decoder)
 4. Output Layer
 
-(source: https://towardsdatascience.com/unet-line-by-line-explanation-9b191c76baf5)
+> Small sidenote: In the Downsampling network, simple CNN architectures are used and abstract representations of the input image are produced. In the Upsampling network, the abstract image representations are upsampled using various techniques to make their spatial dimensions equal to the input image.
+
+(source: https://towardsdatascience.com/unet-line-by-line-explanation-9b191c76baf5, https://towardsdatascience.com/transposed-convolution-demystified-84ca81b4baba#:~:text=In%20the%20Downsampling%20network%2C%20simple,equal%20to%20the%20input%20image.)
+
 
 ### Losses
 1. <i>Dice-Loss</i>
